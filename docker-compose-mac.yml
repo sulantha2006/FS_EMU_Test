@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  firestore:
+    image: sulantha/firestore-emulator:latest
+    environment:
+      - FIRESTORE_PROJECT_ID=dummy-project
+      - PORT=8200
+    ports:
+      - '8200:8200'
+  app:
+    environment:
+      - FIRESTORE_EMULATOR_HOST=firestore:8200
+      - FIRESTORE_PROJECT_ID=dummy-project
+      - ENVIRONMENT=DEVELOPMENT
+      - PORT=8080
+      - ENV=DEV
+    build:
+      context: .
+    ports:
+      - '8080:8080'
+    depends_on:
+      - firestore
